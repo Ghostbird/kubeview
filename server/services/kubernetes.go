@@ -337,8 +337,12 @@ func (k *Kubernetes) GetResources(ns string, grp string, ver string, res string)
 
 // Retrieves the logs of a specific pod in a given namespace
 func (k *Kubernetes) GetPodLogs(ns, podName string, containerName string, lineCount int) (string, error) {
-	if ns == "" || podName == "" {
-		return "", errors.New("namespace or pod name is empty")
+	if ns == "" {
+		return "", errors.New("namespace is empty")
+	} else if podName == "" {
+		return "", errors.New("pod name is empty")
+	} else if containerName == "" {
+		return "", errors.New("container name is empty")
 	}
 
 	if lineCount <= 0 {
